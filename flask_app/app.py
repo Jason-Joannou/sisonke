@@ -1,6 +1,9 @@
 from flask import Flask, request
 from flask_cors import CORS  # Import Flask-CORS
 
+from flask_app.routes.database import database_bp
+from flask_app.routes.users import users_bp
+from flask_app.routes.validation import validation_bp
 from flask_app.routes.whatsapp import whatsapp_bp
 
 app = Flask(__name__)
@@ -9,6 +12,7 @@ app = Flask(__name__)
 CORS(app)  # Add this lines to enable CORS for the entire app
 
 app.register_blueprint(whatsapp_bp)
+app.register_blueprint(validation_bp)
 
 
 @app.route("/")
