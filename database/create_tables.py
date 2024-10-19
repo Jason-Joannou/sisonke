@@ -15,8 +15,25 @@ def create_state_management_table() -> None:
             id INTEGER PRIMARY KEY,
             user_number TEXT,
             last_interaction DATETIME,
-            current_pool Text,
+            current_pool TEXT,
             stack_state TEXT
+        );
+        """
+            )
+        )
+
+
+def create_users_table() -> None:
+
+    with sqlite_conn.connect() as conn:
+        conn.execute(
+            text(
+                """
+        CREATE TABLE IF NOT EXISTS USERS (
+            id INTEGER PRIMARY KEY,
+            user_number TEXT,
+            user_wallet TEXT,
+            tiger_beetle_id TEXT
         );
         """
             )
@@ -25,3 +42,4 @@ def create_state_management_table() -> None:
 
 if __name__ == "__main__":
     create_state_management_table()
+    create_users_table()
