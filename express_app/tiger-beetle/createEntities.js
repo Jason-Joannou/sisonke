@@ -28,8 +28,11 @@ export const createPersonEntityAccount = async () => {
       console.log(`Failed to create ${accountErrors} account(s).`);
       throw new Error(`Failed to create ${accountErrors} account(s).`);
     }
+
+    return personEntityAccount.id;
   } catch (error) {
     console.log(error);
+    return -1;
   }
 };
 
@@ -58,7 +61,10 @@ export const createPoolEntities = async () => {
       console.log(`Failed to create ${accountErrors} account(s).`);
       throw new Error(`Failed to create ${accountErrors} account(s).`);
     }
+
+    return contributionEntityAccount.id;
   } catch (error) {
     console.log(error);
+    return -1;
   }
 };
