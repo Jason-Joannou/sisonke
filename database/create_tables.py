@@ -39,7 +39,23 @@ def create_users_table() -> None:
             )
         )
 
+def create_employers_table() -> None:
+
+    with sqlite_conn.connect() as conn:
+        conn.execute(
+            text(
+                """
+        CREATE TABLE IF NOT EXISTS EMPLOYERS (
+            id INTEGER PRIMARY KEY,
+            employer_number TEXT,
+            user_id TEXT
+        );
+        """
+            )
+        )
+
 
 if __name__ == "__main__":
     create_state_management_table()
     create_users_table()
+    create_employers_table()
