@@ -1,14 +1,11 @@
 from sqlalchemy import text
 
-from .sqlite_connection import SQLiteConnection
+from database.sqlite_connection import SQLiteConnection
 
 sqlite_conn = SQLiteConnection(database="./database/test_db.db")
 
 
 def create_state_management_table() -> None:
-    """
-    docstring
-    """
 
     with sqlite_conn.connect() as conn:
         conn.execute(
