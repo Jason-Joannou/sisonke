@@ -56,3 +56,16 @@ CLAIM_INSURANCE = {
     "state_selection": {"2": "back_state"},
     "state": 1,
 }
+
+
+EMPLOYER_STATE = {
+    "tag": "employer_state",
+    "message": """
+    Please select one of the following options to proceed:
+    1. Confirm
+    2. Revoke
+    """,
+    "valid_actions": ["1", "2"],
+    "action_requests": {"1": "/insurance/process_claim"},
+    "state_selection": {"2": "back_state"},
+}
