@@ -1,5 +1,5 @@
 import { createAuthenticatedClient } from "@interledger/open-payments";
-import { getEnviromentVariables } from "../../enviroment/index";
+import { getEnviromentVariables } from "../enviroment/index.js";
 
 const { walletAddressUrl, keyID, privateKeyID } = getEnviromentVariables();
 

@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "start": "node index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node ./utils/wallet.js"
   },
   "keywords": [],
   "author": "",
@@ -15,6 +15,7 @@
     "@interledger/http-signature-utils": "^2.0.2",
     "@interledger/open-payments": "^6.13.2",
     "@interledger/openapi": "^2.0.2",
+    "dotenv": "^16.4.5",
     "tigerbeetle-node": "^0.16.9"
   }
 }
