@@ -1,6 +1,6 @@
 from flask import Blueprint, request
 
-users_bp = Blueprint("whatsapp", __name__)
+users_bp = Blueprint("users", __name__)
 
 
 BASE_ROUTE = "/users"
