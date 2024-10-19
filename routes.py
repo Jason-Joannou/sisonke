@@ -85,17 +85,37 @@ def dashboard():
     return render_template('dashboard.html')
 
 
-@main.route('/items')
+@main.route('/items', methods=['GET','POST'])
 def items():
     # Add authentication check here
     return render_template('items.html')
 
+@main.route('/add_item', methods=['GET', 'POST'])
+def add_item():
+    if request.method == 'POST':
+        # Process the form data
+        item_name = request.form.get('item_name')
+        item_type = request.form.get('item_type')
+        insured_amount = request.form.get('insured_amount')
+        purchase_date = request.form.get('purchase_date')
+        description = request.form.get('description')
+
+        # Handle file uploads
+        item_photo = request.files.get('item_photo')
+        receipt_photo = request.files.get('receipt_photo')
+
+        # Save the data to your database or perform any other necessary operations
+
+        # Redirect to a success page or back to the items list
+        return redirect(url_for('items'))
+
+    # If it's a GET request, just render the form
+    return render_template('items.html')
 
 @main.route('/claims')
 def claims():
     # Add authentication check here
     return render_template('claims.html')
-
 
 @main.route('/insurance-pools')
 def insurance_pools():
