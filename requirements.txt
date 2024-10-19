@@ -1,0 +1,9 @@
+Flask
+twilio
+SQLAlchemy
+requests
+Flask-CORS
+Flask-Migrate
+Flask-RESTful
+gunicorn
+python-dotenv
