@@ -16,9 +16,7 @@ def index() -> str:
     return "Sisonke API"
 
 
-app.route("/test_endpoint", methods=["POST"])
-
-
+@app.route("/test_endpoint", methods=["POST"])
 def test_endpoint() -> str:
 
     print(request.json)

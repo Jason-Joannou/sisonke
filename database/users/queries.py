@@ -1,3 +1,11 @@
+from sqlalchemy import text
+
+from database.sqlite_connection import SQLiteConnection
+from database.utils import extract_whatsapp_number
+
+sqlite_conn = SQLiteConnection(database="./database/test_db.db")
+
+
 def check_if_number_exists_sqlite(from_number: str) -> bool:
     from_number = extract_whatsapp_number(from_number=from_number)
     query = "SELECT * FROM USERS WHERE user_number = :from_number"
