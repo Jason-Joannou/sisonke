@@ -8,7 +8,6 @@ const tigerRouter = express.Router();
 
 tigerRouter.get("/createPersonEntity", async (req, res) => {
   try {
-    // const { userId } = req.body;
     const personEntityId = await createPersonEntityAccount();
     if (personEntityId === -1) {
       return res.status(500).json({ error: "Failed to create account" });

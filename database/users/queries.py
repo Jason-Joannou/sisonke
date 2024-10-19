@@ -35,6 +35,8 @@ def insert_user(user_number: str, user_wallet: str, tiger_beetle_id: str) -> Non
                     "tiger_beetle_id": tiger_beetle_id,
                 },
             )
+            conn.commit()
         except Exception as e:
             print(f"An error occurred in insert_user: {e}")
+            conn.rollback()
             raise e
