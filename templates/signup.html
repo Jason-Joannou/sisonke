@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - MicroInsure</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+    <div class="min-h-screen bg-gray-100 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+        <div class="sm:mx-auto sm:w-full sm:max-w-md">
+            <svg class="mx-auto h-12 w-auto text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+            </svg>
+            <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">Create your account</h2>
+            <p class="mt-2 text-center text-sm text-gray-600">
+                Or
+                <a href="{{ url_for('main.login') }}" class="font-medium text-indigo-600 hover:text-indigo-500">
+                    sign in to your existing account
+                </a>
+            </p>
+        </div>
+
+        <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+            <div class="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
+                <form class="space-y-6" action="{{ url_for('main.signup') }}" method="POST" enctype="multipart/form-data">
+                    <div>
+                        <label for="phone_number" class="block text-sm font-medium text-gray-700">
+                            Phone Number
+                        </label>
+                        <div class="mt-1">
+                            <input id="phone_number" name="phone_number" type="tel" autocomplete="tel" required
+                                   class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                   placeholder="+27718924197">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label for="password" class="block text-sm font-medium text-gray-700">
+                            Password
+                        </label>
+                        <div class="mt-1">
+                            <input id="password" name="password" type="password" autocomplete="new-password" required
+                                   class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label for="first_name" class="block text-sm font-medium text-gray-700">
+                            First Name
+                        </label>
+                        <div class="mt-1">
+                            <input id="first_name" name="first_name" type="text" autocomplete="given-name" required
+                                   class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label for="last_name" class="block text-sm font-medium text-gray-700">
+                            Last Name
+                        </label>
+                        <div class="mt-1">
+                            <input id="last_name" name="last_name" type="text" autocomplete="family-name" required
+                                   class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label for="date_of_birth" class="block text-sm font-medium text-gray-700">
+                            Date of Birth
+                        </label>
+                        <div class="mt-1">
+                            <input id="date_of_birth" name="date_of_birth" type="date" required
+                                   class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label for="id_type" class="block text-sm font-medium text-gray-700">
+                            ID Type
+                        </label>
+                        <div class="mt-1">
+                            <select id="id_type" name="id_type" autocomplete="id-type" required
+                                    class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                                <option value="passport">Passport</option>
+                                <option value="national_id">National ID</option>
+                                <option value="drivers_license">Driver's License</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label for="id_number" class="block text-sm font-medium text-gray-700">
+                            ID Number
+                        </label>
+                        <div class="mt-1">
+                            <input id="id_number" name="id_number" type="text" required
+                                   class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label for="id_photo" class="block text-sm font-medium text-gray-700">
+                            ID Photo
+                        </label>
+                        <div class="mt-1">
+                            <input id="id_photo" name="id_photo" type="file" accept="image/*" required
+                                   class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                        </div>
+                    </div>
+
+                    <div>
+                        <button type="submit"
+                                class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                            Sign up
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

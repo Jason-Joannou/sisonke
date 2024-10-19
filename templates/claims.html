@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Claims - MicroInsure</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+    <div class="min-h-screen bg-gray-100">
+        <nav class="bg-white shadow-sm">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex justify-between h-16">
+                    <div class="flex">
+                        <div class="flex-shrink-0 flex items-center">
+                            <svg class="h-8 w-8 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                            </svg>
+                            <span class="ml-2 text-xl font-bold text-gray-900">MicroInsure</span>
+                        </div>
+                    </div>
+                    <div class="hidden sm:ml-6 sm:flex sm:space-x-8">
+                        <a href="/dashboard" class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">Dashboard</a>
+                        <a href="/items" class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">My Items</a>
+                        <a href="/claims" class="border-indigo-500 text-gray-900 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">Claims</a>
+                        <a href="/insurance-pools" class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">Insurance Pools</a>
+                    </div>
+                    <div class="hidden sm:ml-6 sm:flex sm:items-center">
+                        <button type="button" class="bg-white p-1 rounded-full text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                            <span class="sr-only">View notifications</span>
+                            <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+                            </svg>
+                        </button>
+                        <div class="ml-3 relative">
+                            <div>
+                                <button type="button" class="bg-white flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" id="user-menu-button" aria-expanded="false" aria-haspopup="true">
+                                    <span class="sr-only">Open user menu</span>
+                                    <img class="h-8 w-8 rounded-full" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="">
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <div class="py-10">
+            <header>
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <h1 class="text-3xl font-bold leading-tight text-gray-900">Claims</h1>
+                </div>
+            </header>
+            <main>
+                <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                    <div class="px-4 py-8 sm:px-0">
+                        <div class="bg-white shadow overflow-hidden sm:rounded-lg mb-8">
+                            <div class="px-4 py-5 sm:px-6">
+                                <h3 class="text-lg leading-6 font-medium text-gray-900">
+                                    Submit a New Claim
+                                </h3>
+                                <p class="mt-1 max-w-2xl text-sm text-gray-500">
+                                    Please provide details about your claim.
+                                </p>
+                            </div>
+                            <div class="border-t border-gray-200">
+                                <form action="#" method="POST" class="space-y-6 px-4 py-5 sm:p-6">
+                                    <div class="grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
+                                        <div class="sm:col-span-3">
+                                            <label for="item" class="block text-sm font-medium text-gray-700">
+                                                Insured Item
+                                            </label>
+                                            <div class="mt-1">
+                                                <select id="item" name="item" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md">
+                                                    <option>Smartphone</option>
+                                                    <option>Laptop</option>
+                                                    <option>Camera</option>
+                                                    <option>Tablet</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="sm:col-span-3">
+                                            <label for="claim-type" class="block text-sm font-medium text-gray-700">
+                                                Claim Type
+                                            </label>
+                                            <div class="mt-1">
+                                                <select id="claim-type" name="claim-type" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md">
+                                                    <option>Damage</option>
+                                                    <option>Theft</option>
+                                                    <option>Loss</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="sm:col-span-6">
+                                            <label for="description" class="block text-sm font-medium text-gray-700">
+                                                Description
+                                            </label>
+                                            <div class="mt-1">
+                                                <textarea id="description" name="description" rows="3" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border border-gray-300 rounded-md"></textarea>
+                                            </div>
+                                            <p class="mt-2 text-sm text-gray-500">Write a few sentences about the incident.</p>
+                                        </div>
+
+                                        <div class="sm:col-span-3">
+                                            <label for="date" class="block text-sm font-medium text-gray-700">
+                                                Date of Incident
+                                            </label>
+                                            <div class="mt-1">
+                                                <input type="date" name="date" id="date" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md">
+                                            </div>
+                                        </div>
+
+                                        <div class="sm:col-span-6">
+                                            <label for="photo" class="block text-sm font-medium text-gray-700">
+                                                Photo
+                                            </label>
+                                            <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
+                                                <div class="space-y-1 text-center">
+                                                    <svg class="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
+                                                        <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                                    </svg>
+                                                    <div class="flex text-sm text-gray-600">
+                                                        <label for="file-upload" class="relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500">
+                                                            <span>Upload a file</span>
+                                                            <input id="file-upload" name="file-upload" type="file" class="sr-only">
+                                                        </label>
+                                                        <p class="pl-1">or drag and drop</p>
+                                                    </div>
+                                                    <p class="text-xs text-gray-500">
+                                                        PNG, JPG, GIF up to 10MB
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="flex justify-end">
+                                        <button type="button" class="bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                                            Cancel
+                                        </button>
+                                        <button type="submit" class="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                                            Submit Claim
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                        <div class="mt-8">
+                            <h2 class="text-lg leading-6 font-medium text-gray-900">Current Claims</h2>
+                            <div class="mt-2 bg-white shadow overflow-hidden sm:rounded-md">
+                                <ul role="list" class="divide-y divide-gray-200">
+                                    <li>
+                                        <a href="#" class="block hover:bg-gray-50">
+                                            <div class="px-4 py-4 sm:px-6">
+                                                <div class="flex items-center justify-between">
+                                                    <p class="text-sm font-medium text-indigo-600 truncate">
+                                                        Smartphone Damage
+                                                    </p>
+                                                    <div class="ml-2 flex-shrink-0 flex">
+                                                        <p class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                                            In Progress
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <div class="mt-2 sm:flex sm:justify-between">
+                                                    <div class="sm:flex">
+                                                        <p class="flex items-center text-sm text-gray-500">
+                                                            Claim #12345
+                                                        </p>
+                                                    </div>
+                                                    <div class="mt-2 flex items-center text-sm text-gray-500 sm:mt-0">
+                                                        <svg class="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                                            <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd" />
+                                                        </svg>
+
+                                                        <p>
+                                                            Submitted on <time datetime="2020-01-07">January 7, 2020</time>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="block hover:bg-gray-50">
+                                            <div class="px-4 py-4 sm:px-6">
+                                                <div class="flex items-center justify-between">
+                                                    <p class="text-sm font-medium text-indigo-600 truncate">
+                                                        Laptop Theft
+                                                    </p>
+                                                    <div class="ml-2 flex-shrink-0 flex">
+                                                        <p class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">
+                                                            Under Review
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <div class="mt-2 sm:flex sm:justify-between">
+                                                    <div class="sm:flex">
+                                                        <p class="flex items-center text-sm text-gray-500">
+                                                            Claim #12346
+                                                        </p>
+                                                    </div>
+                                                    <div class="mt-2 flex items-center text-sm text-gray-500 sm:mt-0">
+                                                        <svg class="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                                            <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd" />
+                                                        </svg>
+                                                        <p>
+                                                            Submitted on <time datetime="2020-01-07">January 15, 2020</time>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="mt-8">
+                            <h2 class="text-lg leading-6 font-medium text-gray-900">Past Claims</h2>
+                            <div class="mt-2 bg-white shadow overflow-hidden sm:rounded-md">
+                                <ul role="list" class="divide-y divide-gray-200">
+                                    <li>
+                                        <a href="#" class="block hover:bg-gray-50">
+                                            <div class="px-4 py-4 sm:px-6">
+                                                <div class="flex items-center justify-between">
+                                                    <p class="text-sm font-medium text-indigo-600 truncate">
+                                                        Camera Damage
+                                                    </p>
+                                                    <div class="ml-2 flex-shrink-0 flex">
+                                                        <p class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                                            Approved
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <div class="mt-2 sm:flex sm:justify-between">
+                                                    <div class="sm:flex">
+                                                        <p class="flex items-center text-sm text-gray-500">
+                                                            Claim #12340
+                                                        </p>
+                                                    </div>
+                                                    <div class="mt-2 flex items-center text-sm text-gray-500 sm:mt-0">
+                                                        <svg class="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                                            <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd" />
+                                                        </svg>
+                                                        <p>
+                                                            Closed on <time datetime="2020-01-07">December 15, 2019</time>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="block hover:bg-gray-50">
+                                            <div class="px-4 py-4 sm:px-6">
+                                                <div class="flex items-center justify-between">
+                                                    <p class="text-sm font-medium text-indigo-600 truncate">
+                                                        Tablet Loss
+                                                    </p>
+                                                    <div class="ml-2 flex-shrink-0 flex">
+                                                        <p class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
+                                                            Denied
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <div class="mt-2 sm:flex sm:justify-between">
+                                                    <div class="sm:flex">
+                                                        <p class="flex items-center text-sm text-gray-500">
+                                                            Claim #12339
+                                                        </p>
+                                                    </div>
+                                                    <div class="mt-2 flex items-center text-sm text-gray-500 sm:mt-0">
+                                                        <svg class="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                                            <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd" />
+                                                        </svg>
+                                                        <p>
+                                                            Closed on <time datetime="2020-01-07">November 30, 2019</time>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+</body>
+</html>
