@@ -43,3 +43,16 @@ INSURANCE_SERVICES = {
     "state_selection": {"4": "back_state"},
     "state": 1,
 }
+
+CLAIM_INSURANCE = {
+    "tag": "claim_insurance",
+    "message": """
+    Are you are sure you want to claim your unemployment insurance? This will initiate the claims process:
+    1. Claim Insurance
+    2. Back
+    """,
+    "valid_actions": ["1", "2"],
+    "action_requests": {"1": "/insurance/claim_insurance"},
+    "state_selection": {"2": "back_state"},
+    "state": 1,
+}
