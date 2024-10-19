@@ -4,7 +4,6 @@
   "description": "",
   "main": "index.js",
   "type": "module",
-
   "scripts": {
     "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -13,6 +12,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@interledger/http-signature-utils": "^2.0.2",
+    "@interledger/open-payments": "^6.13.2",
+    "@interledger/openapi": "^2.0.2",
     "tigerbeetle-node": "^0.16.9"
   }
 }
