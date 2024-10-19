@@ -37,7 +37,7 @@ class MessageStateManager:
 
     def processes_user_request(self, user_action: str) -> str:
         self.update_registration_status()
-        # User is not registered
+
         if not self.registration_status:
             if user_action in self.base_greetings:
                 self.set_current_state(tag="unregistered_number")
