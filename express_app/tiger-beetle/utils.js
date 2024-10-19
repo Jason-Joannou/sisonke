@@ -1,4 +1,4 @@
-import { client } from "./createClient";
+import { client } from "./createClient.js";
 
 export const getDebitsPosted = async (accountId) => {
   try {

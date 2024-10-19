@@ -1,10 +1,12 @@
-import id from "tigerbeetle-node";
-import { client } from "./createClient";
+import { id } from "tigerbeetle-node";
+import { client } from "./createClient.js";
 
 // Need to store in db
 
 export const createPersonEntityAccount = async () => {
   try {
+    console.log(id);
+    console.log(id());
     // person Entities will be ledger 1
     const personEntityAccount = {
       id: id(), // Generate a unique Tyger Beetle account ID
@@ -29,10 +31,10 @@ export const createPersonEntityAccount = async () => {
       throw new Error(`Failed to create ${accountErrors} account(s).`);
     }
 
-    return personEntityAccount.id;
+    return personEntityAccount.id.toString();
   } catch (error) {
     console.log(error);
-    return -1;
+    throw error;
   }
 };
 
@@ -62,7 +64,7 @@ export const createPoolEntities = async () => {
       throw new Error(`Failed to create ${accountErrors} account(s).`);
     }
 
-    return contributionEntityAccount.id;
+    return contributionEntityAccount.id.toString();
   } catch (error) {
     console.log(error);
     return -1;

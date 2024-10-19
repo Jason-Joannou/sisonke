@@ -2,22 +2,37 @@ import express from "express";
 import {
   createPersonEntityAccount,
   createPoolEntities,
-} from "../tiger-beetle/createEntities";
+} from "../tiger-beetle/createEntities.js";
 
-const router = express.Router();
+const tigerRouter = express.Router();
 
-router.post("/createPersonEntity", (req, res) => {});
+tigerRouter.get("/createPersonEntity", async (req, res) => {
+  try {
+    // const { userId } = req.body;
+    const personEntityId = await createPersonEntityAccount();
+    if (personEntityId === -1) {
+      return res.status(500).json({ error: "Failed to create account" });
+    }
 
-router.post("/createPoolEntities", (req, res) => {});
+    return res
+      .status(200)
+      .json({ personEntityId: personEntityId, message: "success" });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ error: "Failed to create account" });
+  }
+});
 
-router.post("/transerBetweenEntities", (req, res) => {});
+tigerRouter.post("/createPoolEntities", (req, res) => {});
 
-router.post("/transferToContributionPool", (req, res) => {});
+tigerRouter.post("/transerBetweenEntities", (req, res) => {});
 
-router.post("/transferFromContributionPool", (req, res) => {});
+tigerRouter.post("/transferToContributionPool", (req, res) => {});
 
-router.post("/transferToPayoutPool", (req, res) => {});
+tigerRouter.post("/transferFromContributionPool", (req, res) => {});
 
-router.post("/transferFromPayoutPool", (req, res) => {});
+tigerRouter.post("/transferToPayoutPool", (req, res) => {});
 
-export default router;
+tigerRouter.post("/transferFromPayoutPool", (req, res) => {});
+
+export default tigerRouter;
