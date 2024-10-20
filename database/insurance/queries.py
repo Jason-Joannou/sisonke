@@ -152,7 +152,7 @@ def get_insurance_member_details(pool_id, user_id):
 
 def update_adhoc_contribution_parms(pool_id: int, user_id: int, url: str, token: str):
     update_query = """
-    UPDATE STOKVEL_MEMBERS
+    UPDATE INSURANCE_MEMBERS
     SET adhoc_contribution_uri = :adhoc_contribution_uri, adhoc_contribution_token = :adhoc_contribution_token
     WHERE pool_id = :pool_id AND user_id = :user_id
     """
