@@ -36,10 +36,10 @@ INSURANCE_SERVICES = {
     """,
     "valid_actions": ["1", "2", "3", "4"],
     "action_responses": {
-        "1": "Please apply for unemployment insurance through our online portal: http://localhost:5000/insurance/unemployment",
+        "1": "Please apply for unemployment insurance through our online portal: http://localhost:5000/insurance/claims",
         "2": "Not for Demo Purposes",
+        "3": "Not for Demo Purposes",
     },
-    "action_requests": {"3": "/stokvel/my_stokvels"},
     "state_selection": {"4": "back_state"},
     "state": 1,
 }

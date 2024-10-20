@@ -20,6 +20,7 @@ from database.users.queries import (
     insert_into_employers,
     update_user_contribution_token_uri,
 )
+from database.utils import extract_whatsapp_number
 from flask_app.utils.utils import calculate_number_periods
 from whatsapp_utils.twilio_messenger import send_notification_message
 
@@ -62,7 +63,8 @@ def claim_insurance() -> str:
 def process_claim() -> str:
 
     employer_number = request.json.get("user_number")
-    delete_employer_state(employer_number=employer_number)
+    employee_number = extract_whatsapp_number(from_number=employer_number)
+    # delete_employer_state(employer_number=employer_number)
     employee_number = request.json.get("current_pool")
     send_notification_message(
         to=f"whatsapp:{employee_number}",
@@ -99,7 +101,6 @@ def process_claim() -> str:
     send_notification_message(
         to=f"whatsapp:{employer_number}", body=notfication_message
     )
-    pop_previous_state(from_number=employer_number)
 
     return "Thank you for your response. We will let your employee know of the outcome."
 
