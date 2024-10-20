@@ -57,7 +57,9 @@ export const createPoolEntities = async () => {
       timestamp: 0n,
     };
 
-    const accountErrors = await client.createAccounts([personEntityAccount]);
+    const accountErrors = await client.createAccounts([
+      contributionEntityAccount,
+    ]);
 
     if (accountErrors > 0) {
       console.log(`Failed to create ${accountErrors} account(s).`);

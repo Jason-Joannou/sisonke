@@ -22,7 +22,21 @@ tigerRouter.get("/createPersonEntity", async (req, res) => {
   }
 });
 
-tigerRouter.post("/createPoolEntities", (req, res) => {});
+tigerRouter.get("/createPoolEntities", async (req, res) => {
+  try {
+    const poolEntityId = await createPoolEntities();
+    if (poolEntityId === -1) {
+      return res.status(500).json({ error: "Failed to create account" });
+    }
+
+    return res
+      .status(200)
+      .json({ poolEntityId: poolEntityId, message: "success" });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ error: "Failed to create account" });
+  }
+});
 
 tigerRouter.post("/transerBetweenEntities", (req, res) => {});
 
