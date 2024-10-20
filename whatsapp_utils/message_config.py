@@ -45,7 +45,7 @@ INSURANCE_SERVICES = {
 }
 
 CLAIM_INSURANCE = {
-    "tag": "claim_insurance",
+    "tag": "claim_services",
     "message": """
     Are you are sure you want to claim your unemployment insurance? This will initiate the claims process:
     1. Claim Insurance
@@ -61,11 +61,9 @@ CLAIM_INSURANCE = {
 EMPLOYER_STATE = {
     "tag": "employer_state",
     "message": """
-    Please select one of the following options to proceed:
-    1. Confirm
-    2. Revoke
+    Thank you for your response. We will let your employer know of the outcome.
     """,
     "valid_actions": ["1", "2"],
     "action_requests": {"1": "/insurance/process_claim"},
-    "state_selection": {"2": "back_state"},
+    "state_selection": {"2": "/insurance/claim_revoke"},
 }

@@ -19,9 +19,7 @@ load_dotenv()
 class TwilioClient:
 
     def __init__(self):
-        self.client = Client(
-            os.getenv("TWILIO_ACCOUNT_SID"), os.getenv("TWILIO_AUTH_TOKEN")
-        )
+        self.client = Client(os.getenv("TWILIO_ACCOUNT_SID"), os.getenv("TWILIO_TOKEN"))
         self.from_number = os.getenv("TWILIO_PHONE_NUMBER")
 
     def send_mesage_notification(self, to: str, body: str) -> None:

@@ -40,3 +40,25 @@ def insert_user(user_number: str, user_wallet: str, tiger_beetle_id: str) -> Non
             print(f"An error occurred in insert_user: {e}")
             conn.rollback()
             raise e
+
+
+def get_employer_number_from_user(user_number: str) -> str:
+    from_number = extract_whatsapp_number(from_number=user_number)
+    employee_query = "SELECT id FROM USERS WHERE user_number = :from_number"
+    employer_query = "SELECT employer_number FROM EMPLOYERS WHERE user_id= :user_id"
+    with sqlite_conn.connect() as conn:
+        try:
+            result = conn.execute(
+                text(employee_query), {"from_number": from_number}
+            ).fetchone()
+            employer_number = conn.execute(
+                text(employer_query), {"user_id": result[0]}
+            ).fetchone()
+
+            if employer_number:
+                return employer_number[0]
+
+            return None
+        except Exception as e:
+            print(f"An error occurred in get_employer_id_from_user: {e}")
+            raise e
