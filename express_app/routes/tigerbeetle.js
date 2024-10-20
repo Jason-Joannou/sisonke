@@ -3,6 +3,7 @@ import {
   createPersonEntityAccount,
   createPoolEntities,
 } from "../tiger-beetle/createEntities.js";
+import { recordTransaction } from "../tiger-beetle/utils.js";
 
 const tigerRouter = express.Router();
 
@@ -38,7 +39,31 @@ tigerRouter.get("/createPoolEntities", async (req, res) => {
   }
 });
 
-tigerRouter.post("/transerBetweenEntities", (req, res) => {});
+tigerRouter.post("/transferBetweenEntities", async (req, res) => {
+  const { sourceAccountId, destinationAccountId, amount } = req.body;
+
+  if (!sourceAccountId || !destinationAccountId || !amount) {
+    return res.status(400).json({ error: "Missing required fields" });
+  }
+
+  try {
+    const result = await recordTransaction(
+      sourceAccountId,
+      destinationAccountId,
+      amount
+    );
+    if (!result.success) {
+      return res.status(500).json({ error: result.error });
+    }
+
+    return res
+      .status(200)
+      .json({ message: "Transaction successful", result: result.result });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ error: "Failed to process transaction" });
+  }
+});
 
 tigerRouter.post("/transferToContributionPool", (req, res) => {});
 

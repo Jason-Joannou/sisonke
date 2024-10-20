@@ -40,3 +40,38 @@ export const lookUpTransfer = async (transferId) => {
     return -1;
   }
 };
+
+export const createTransaction = async (transaction) => {
+  try {
+    const response = await client.createTransaction(transaction);
+    return response;
+  } catch (error) {
+    console.log(error);
+    return -1;
+  }
+};
+
+export const recordTransaction = async (
+  sourceAccountId,
+  destinationAccountId,
+  amount
+) => {
+  try {
+    const transaction = {
+      debit_account_id: sourceAccountId,
+      credit_account_id: destinationAccountId,
+      amount: amount,
+      timestamp: Date.now(),
+    };
+
+    const result = await createTransaction(transaction);
+    if (result === -1) {
+      throw new Error("Transaction failed");
+    }
+
+    return { success: true, result };
+  } catch (error) {
+    console.error("Error recording transaction:", error);
+    return { success: false, error: error.message };
+  }
+};

@@ -10,14 +10,15 @@ from database.demo_queries import (
     update_pool_token_uri,
     update_user_contribution_token_uri,
 )
-from database.insurance.queries import get_insurance_member_details
+from database.insurance.queries import (
+    get_insurance_member_details,
+    get_insurance_pool_details,
+    get_user_tb_id,
+)
 
 # Define the first method
 
 node_server_initiate_grant = "http://localhost:3001/incoming-payment-setup"
-node_server_initiate_stokvelpayout_grant = (
-    "http://localhost:3001/incoming-payment-setup-stokvel-payout"
-)
 
 node_server_create_initial_payment = (
     "http://localhost:3001/create-initial-outgoing-payment"
@@ -26,9 +27,8 @@ node_server_create_initial_payment = (
 node_server_recurring_payment = (
     "http://localhost:3001/payments/process-recurring-payments"
 )
-node_server_recurring_payment_with_interest = (
-    "http://localhost:3001/process-recurring-winterest-payment"
-)
+
+node_server_tiger_beetle = "http://localhost:3001/tiger-beetle/transferBetweenEntities"
 
 
 def run_contribution_simulation(pool_id: int, user_id_wallets: dict):
@@ -41,15 +41,15 @@ def run_contribution_simulation(pool_id: int, user_id_wallets: dict):
             if userid not in contributions:
                 contributions[userid] = 0
 
-            stokvel_members_details = get_insurance_member_details(pool_id, userid)
+            insurance_members_details = get_insurance_member_details(pool_id, userid)
             print("add recurring payment")
             payload = {
                 "sender_wallet_address": wallet,
                 "receiving_wallet_address": "https://ilp.interledger-test.dev/insurance_pool_one",
-                "manageUrl": stokvel_members_details.get("user_payment_URI"),
-                "previousToken": stokvel_members_details.get("user_payment_token"),
+                "manageUrl": insurance_members_details.get("user_payment_URI"),
+                "previousToken": insurance_members_details.get("user_payment_token"),
                 "contributionValue": str(
-                    stokvel_members_details.get("pool_initial_payment_needed")
+                    insurance_members_details.get("pool_initial_payment_needed")
                 ),
             }
 
@@ -63,43 +63,26 @@ def run_contribution_simulation(pool_id: int, user_id_wallets: dict):
             new_token = response.json()["token"]
             new_uri = response.json()["manageurl"]
 
-            update_user_contribution_token_uri(pool_id, userid, new_token, new_uri)
+            # tigerBeetle Records
 
-            # contributions[userid] += stokvel_members_details.get("contribution_amount")
-            # current_next_date = update_next_contributions_dates(current_next_date, pool_id, "Months")
-        time.sleep(30)
+            pool_details = get_insurance_pool_details(pool_id=pool_id, user_id=userid)
+            user_tb_id = get_user_tb_id(userid)
 
-
-def run_payout_simulation(
-    pool_id: int, user_id_wallets: dict
-):  # this will be a dict of all of the users that we need to pay out
-    current_next_date = "2024-10-10"
-    for j in range(0, 5):
-        for userid, wallet in user_id_wallets.items():
-            stokvel_members_details = get_insurance_member_details(pool_id, userid)
-
-            print("add recurring payment")
             payload = {
-                "sender_wallet_address": "https://ilp.rafiki.money/alices_stokvel",
-                "receiving_wallet_address": wallet,
-                "manageUrl": stokvel_members_details.get("stokvel_payment_URI"),
-                "previousToken": stokvel_members_details.get("stokvel_payment_token"),
-                "payout_value": str(1589 + j),
+                "sourcAccountId": user_tb_id,
+                "destinationAccountId": pool_details.get("contribution_pool_id"),
+                "amount": insurance_members_details.get("pool_initial_payment_needed"),
             }
 
-            response = requests.post(
-                node_server_recurring_payment_with_interest, json=payload
-            )
+            response = requests.post(node_server_tiger_beetle, json=payload, timeout=10)
 
+            print(response)
             print("RESPONSE: \n", response.json())
 
-            new_token = response.json()["token"]
-            new_uri = response.json()["manageurl"]
+            update_user_contribution_token_uri(pool_id, userid, new_token, new_uri)
 
-            update_pool_token_uri(pool_id, userid, new_token, new_uri)
-            current_next_date = update_next_contributions_dates(
-                current_next_date, pool_id, "Months"
-            )
+            # contributions[userid] += insurance_members_details.get("contribution_amount")
+            # current_next_date = update_next_contributions_dates(current_next_date, pool_id, "Months")
         time.sleep(30)
 
 

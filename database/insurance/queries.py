@@ -114,18 +114,6 @@ def find_pool_id(pool_name: str):
 
 
 def get_insurance_member_details(pool_id, user_id):
-    """
-    Retrieve stokvel member details from the database given a stokvel ID and user ID.
-
-    Args:
-        pool_id (str): The ID of the stokvel to retrieve member details for.
-        user_id (str): The user ID to filter the stokvel members by.
-
-    Returns:
-        dict: A dictionary containing the stokvel member's details, including
-              the user ID, stokvel ID, contribution amount, payment token, payment
-              URI, quote ID, and the creation date.
-    """
     select_query = "SELECT * FROM INSURANCE_MEMBERS WHERE pool_id = :pool_id and user_id = :user_id"
     parameters = {"pool_id": pool_id, "user_id": user_id}
     with db_conn.connect() as conn:
@@ -147,6 +135,50 @@ def get_insurance_member_details(pool_id, user_id):
 
         except sqlite3.Error as e:
             print(f"Error retrieving stokvel details: {e}")
+            raise e
+
+
+def get_insurance_pool_details(pool_id, user_id):
+    select_query = "SELECT contribution_pool_id, payout_pool_id FROM INSURANCE_POOLS WHERE id = :pool_id"
+    parameters = {"pool_id": pool_id, "user_id": user_id}
+    with db_conn.connect() as conn:
+        try:
+            result = conn.execute(text(select_query), parameters)
+            insurance_pool_details = result.fetchone()  # Fetch one record
+
+            if insurance_pool_details is None:
+                print(f"No stokvel found with id: {pool_id}")
+                return None  # Return None if no record is found
+
+            # Convert the result to a dictionary if necessary
+            columns = result.keys()  # Extract column names from the result
+            insurance_pool_dict = dict(
+                zip(columns, insurance_pool_details)
+            )  # Create a dictionary from column names and values
+
+            return insurance_pool_dict  # Return the details
+
+        except sqlite3.Error as e:
+            print(f"Error retrieving stokvel details: {e}")
+            raise e
+
+
+def get_user_tb_id(user_id):
+    select_query = "SELECT tiger_beetle_id FROM USERS WHERE id = :user_id"
+    parameters = {"user_id": user_id}
+    with db_conn.connect() as conn:
+        try:
+            result = conn.execute(text(select_query), parameters)
+            user_tb_id = result.fetchone()[0]  # Fetch one record
+
+            if user_tb_id is None:
+                print(f"No user found with id: {user_id}")
+                return None  # Return None if no record is found
+
+            return user_tb_id  # Return the details
+
+        except sqlite3.Error as e:
+            print(f"Error retrieving user details: {e}")
             raise e
 
 
