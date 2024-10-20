@@ -3,7 +3,7 @@
 
 ## Links
 
-* Presentation: 
+* Presentation: https://www.canva.com/design/DAGUBwsU7xw/jLJiSlqAgIWHgHCwRI3iSg/edit?utm_content=DAGUBwsU7xw&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton
 * Demo: _>(Optional) Link to a live demo.<_
 * Other: _>(Optional) Any links you want to share. Make sure you add a description to the link.<_
 
