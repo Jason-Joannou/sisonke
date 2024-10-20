@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, redirect, url_for, flash,session
+from flask import Blueprint, render_template, request, redirect, url_for, flash,session,jsonify
 import sqlite3
 from database import get_db_connection
 
@@ -90,27 +90,31 @@ def items():
     # Add authentication check here
     return render_template('items.html')
 
-@main.route('/add_item', methods=['GET', 'POST'])
-def add_item():
-    if request.method == 'POST':
-        # Process the form data
-        item_name = request.form.get('item_name')
-        item_type = request.form.get('item_type')
-        insured_amount = request.form.get('insured_amount')
-        purchase_date = request.form.get('purchase_date')
-        description = request.form.get('description')
+@main.route('/add_policy', methods=['POST'])
+def add_policy():
+    # Extract data from the form
+    job_name = request.form.get('job_name')
+    company = request.form.get('company')
+    employer_number = request.form.get('employer_number')
+    phone_number = request.form.get('phone_number')
+    industry = request.form.get('industry')
+    current_income = request.form.get('current_income')
 
-        # Handle file uploads
-        item_photo = request.files.get('item_photo')
-        receipt_photo = request.files.get('receipt_photo')
+    # Create a dictionary with the extracted data
+    new_policy = {
+        'job_name': job_name,
+        'company': company,
+        'employer_number': employer_number,
+        'phone_number': phone_number,
+        'industry': industry,
+        'current_income': current_income
+    }
 
-        # Save the data to your database or perform any other necessary operations
+    # Here you would typically save the data to a database
+    # For this example, we'll just print the data and return it as JSON
+    print("New policy added:", new_policy)
 
-        # Redirect to a success page or back to the items list
-        return redirect(url_for('items'))
-
-    # If it's a GET request, just render the form
-    return render_template('items.html')
+    return jsonify({"message": "Policy added successfully", "policy": new_policy}), 201
 
 @main.route('/claims')
 def claims():
