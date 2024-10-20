@@ -1,6 +1,6 @@
 from flask import Blueprint, request
 
-from database.state_manager.queries import insert_employer_state
+from database.state_manager.queries import delete_employer_state, insert_employer_state
 from database.users.queries import get_employer_number_from_user
 from whatsapp_utils.twilio_messenger import send_notification_message
 
@@ -38,6 +38,7 @@ def claim_insurance() -> str:
 def process_claim() -> str:
 
     employer_number = request.json.get("user_number")
+    delete_employer_state(employer_number=employer_number)
     employee_number = request.json.get("current_pool")
     send_notification_message(
         to=f"whatsapp:{employee_number}",

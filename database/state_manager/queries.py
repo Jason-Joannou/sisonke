@@ -230,3 +230,51 @@ def get_current_pool_selection(from_number: str) -> Optional[str]:
         result = conn.execute(text(query), {"from_number": from_number}).fetchone()
 
     return result[0]
+
+
+def insert_employer_state(employer_number: str, employee_number: str) -> None:
+
+    employer_number = extract_whatsapp_number(from_number=employer_number)
+    employee_number = extract_whatsapp_number(from_number=employee_number)
+
+    query = "INSERT INTO STATE_MANAGEMENT (user_number, last_interaction, current_pool ,stack_state) VALUES (:from_number, :datetime, :current_pool, :stack_state)"
+    engine = db_conn.get_engine()
+
+    with engine.connect() as conn:
+        transaction = conn.begin()
+        try:
+            conn.execute(
+                text(query),
+                {
+                    "from_number": employer_number,
+                    "datetime": datetime.now(),
+                    "current_pool": employee_number,
+                    "stack_state": json.dumps(["employer_state"]),
+                },
+            )
+            transaction.commit()
+        except SQLAlchemyError as e:
+            transaction.rollback()
+            print("There was an error inserting the state:", e)
+
+
+def delete_employer_state(employer_number: str) -> None:
+
+    employer_number = extract_whatsapp_number(from_number=employer_number)
+
+    query = "DELETE FROM STATE_MANAGEMENT WHERE user_number = :from_number"
+    engine = db_conn.get_engine()
+
+    with engine.connect() as conn:
+        transaction = conn.begin()
+        try:
+            conn.execute(
+                text(query),
+                {
+                    "from_number": employer_number,
+                },
+            )
+            transaction.commit()
+        except SQLAlchemyError as e:
+            transaction.rollback()
+            print("There was an error inserting the state:", e)
