@@ -154,4 +154,55 @@ paymentRouter.post("/process-recurring-payments", async (req, res) => {
   }
 });
 
+paymentRouter.post("/adhoc-payment", async (req, res) => {
+  try {
+    const {
+      value,
+      walletAddressURL,
+      sender_walletAddressURL,
+      user_id,
+      stokvel_id,
+    } = req.body; // Get data from request body
+
+    const receiverWallet = await validateWalletAddress(walletAddressURL);
+    const senderWallet = await validateWalletAddress(sender_walletAddressURL);
+
+    const paydate = new Date().toISOString();
+    const grant = await createGrant(receiverWallet, "incoming-payment", false);
+    const incomingPayment = await createIncomingPayment(
+      receiverWallet,
+      value,
+      grant,
+      paydate
+    );
+    const quote = await createQuote(senderWallet, incomingPayment.id);
+    const paymentLimits = {
+      debitAmount: quote.debitAmount,
+      receiveAmount: quote.receiveAmount,
+    };
+    const recurringGrant = await createGrant(
+      senderWallet,
+      "outgoing-payment",
+      true,
+      "adhoc",
+      paymentLimits,
+      user_id,
+      stokvel_id,
+      quote.id
+    );
+
+    res.json({
+      recurring_grant: recurringGrant,
+      continue_uri: recurringGrant.continue.uri,
+      continue_token: recurringGrant.continue.access_token,
+      quote_id: quote.id,
+    }); //{all information stored here should be returned}
+  } catch (error) {
+    console.log(error);
+    return res
+      .status(500)
+      .json({ error: "An unexpected error occurred during grant creation." });
+  }
+});
+
 export default paymentRouter;

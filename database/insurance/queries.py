@@ -118,7 +118,7 @@ def get_insurance_member_details(pool_id, user_id):
     Retrieve stokvel member details from the database given a stokvel ID and user ID.
 
     Args:
-        stokvel_id (str): The ID of the stokvel to retrieve member details for.
+        pool_id (str): The ID of the stokvel to retrieve member details for.
         user_id (str): The user ID to filter the stokvel members by.
 
     Returns:
@@ -147,4 +147,39 @@ def get_insurance_member_details(pool_id, user_id):
 
         except sqlite3.Error as e:
             print(f"Error retrieving stokvel details: {e}")
+            raise e
+
+
+def update_adhoc_contribution_parms(pool_id: int, user_id: int, url: str, token: str):
+    update_query = """
+    UPDATE STOKVEL_MEMBERS
+    SET adhoc_contribution_uri = :adhoc_contribution_uri, adhoc_contribution_token = :adhoc_contribution_token
+    WHERE pool_id = :pool_id AND user_id = :user_id
+    """
+
+    parameters = {
+        "pool_id": pool_id,
+        "user_id": user_id,
+        "adhoc_contribution_uri": url,
+        "adhoc_contribution_token": token,
+    }
+    with db_conn.connect() as conn:
+        try:
+            result = conn.execute(text(update_query), parameters)
+            conn.commit()
+
+            if result.rowcount > 0:
+                print(
+                    f"Successfully updated adhoc paymnet params for pool_id: {pool_id}, user_id: {user_id}"
+                )
+            else:
+                print(
+                    f"No records found to update for pool_id: {pool_id}, user_id: {user_id}"
+                )
+
+        except sqlite3.Error as e:
+            print(f"Error updating stokvel payout: {e}")
+            raise e
+        except Exception as e:
+            print(f"Error updating stokvel payout: {e}")
             raise e

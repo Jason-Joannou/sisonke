@@ -6,8 +6,13 @@ from database.insurance.queries import (
     get_insurance_member_details,
     insert_insurance_member,
     insert_policy,
+    update_adhoc_contribution_parms,
 )
-from database.state_manager.queries import delete_employer_state, insert_employer_state
+from database.state_manager.queries import (
+    delete_employer_state,
+    insert_employer_state,
+    pop_previous_state,
+)
 from database.users.queries import (
     find_user_by_number,
     find_wallet_by_userid,
@@ -24,6 +29,7 @@ NODE_SERVER_INITIATE_GRANT = "http://localhost:3001/payments/user_payment_setup"
 NODE_SERVER_CREATE_INITIAL_PAYMENT = (
     "http://localhost:3001/payments/initial_outgoing_payment"
 )
+NODE_SERVER_ADHOC = "http://localhost:3001/payments/adhoc-payment"
 
 BASE_ROUTE = "/insurance"
 
@@ -60,8 +66,40 @@ def process_claim() -> str:
     employee_number = request.json.get("current_pool")
     send_notification_message(
         to=f"whatsapp:{employee_number}",
-        body="Your claim has been Approved by your employer!",
+        body="Your claim has been Approved by your employer! We are processing your payment now!",
     )
+
+    user_id = find_user_by_number(employee_number)
+    user_wallet = find_wallet_by_userid(user_id)
+
+    payload = {
+        "value": str(100),
+        "walletAddressURL": user_wallet,
+        "sender_walletAddressURL": "https://ilp.interledger-test.dev/insurance_pool_one",
+        "user_id": user_id,
+        "pool_id": "1",
+    }
+
+    response = requests.post(NODE_SERVER_ADHOC, json=payload, timeout=10)
+
+    auth_link = response.json()["recurring_grant"]["interact"]["redirect"]
+    adhoc_contribution_url = response.json()["continue_uri"]
+    adhoc_contribution_token = response.json()["continue_token"]["value"]
+
+    update_adhoc_contribution_parms(
+        pool_id=1,
+        user_id=user_id,
+        url=adhoc_contribution_url,
+        token=adhoc_contribution_token,
+    )
+
+    notfication_message = f"SYSTEM REQUEST: A user is requesting a payout ( attemtping to leave ) {auth_link}"
+
+    # Send notification message to SYSTEM AGENT
+    send_notification_message(
+        to=f"whatsapp:{employer_number}", body=notfication_message
+    )
+    pop_previous_state(from_number=employer_number)
 
     return "Thank you for your response. We will let your employee know of the outcome."
 
