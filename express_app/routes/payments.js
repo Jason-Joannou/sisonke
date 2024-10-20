@@ -9,6 +9,7 @@ import {
   createOutgoingPayment,
 } from "../utils/paymentTypes.js";
 import { validateWalletAddress } from "../utils/wallet.js";
+import { executeRecurringPayments } from "../utils/payments.js";
 
 const paymentRouter = express.Router();
 
@@ -115,6 +116,36 @@ paymentRouter.post("/initial_outgoing_payment", async (req, res) => {
     );
 
     return res.json({ payment: payment, token: token, manageurl: manageurl });
+  } catch (error) {
+    console.log(error);
+    return res
+      .status(500)
+      .json({ error: "An unexpected error occurred during grant creation." });
+  }
+});
+
+paymentRouter.post("/process-recurring-payments", async (req, res) => {
+  try {
+    const {
+      sender_wallet_address,
+      receiving_wallet_address,
+      manageUrl,
+      previousToken,
+      contributionValue,
+    } = req.body; // Get data from request body
+
+    const recurringPaymentParameters = {
+      senderWalletAddress: sender_wallet_address,
+      receiverWalletAddress: receiving_wallet_address,
+      manageURL: manageUrl,
+      previousToken: previousToken,
+      contributionValue: contributionValue,
+    };
+    const recurringPayment = await executeRecurringPayments(
+      recurringPaymentParameters
+    );
+
+    res.json(recurringPayment);
   } catch (error) {
     console.log(error);
     return res

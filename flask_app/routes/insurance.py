@@ -12,6 +12,7 @@ from database.users.queries import (
     find_user_by_number,
     find_wallet_by_userid,
     get_employer_number_from_user,
+    insert_into_employers,
     update_user_contribution_token_uri,
 )
 from flask_app.utils.utils import calculate_number_periods
@@ -147,7 +148,7 @@ def onboard_policy() -> str:
         value=policy_amount,
     )
 
-    insert_employer_state(employer_number=employer_number, employee_number=user_number)
+    insert_into_employers(employer_number=employer_number, user_id=user_id)
 
 
 @insurance_bp.route(f"{BASE_ROUTE}/user_interactive_grant_response", methods=["GET"])
