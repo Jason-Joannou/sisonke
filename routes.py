@@ -125,3 +125,13 @@ def claims():
 def insurance_pools():
     # Add authentication check here
     return render_template('insurancepools.html')
+
+@main.route('/payments')
+def payments():
+    # Add authentication check here
+    return render_template('payments.html')
+
+@main.route('/familymembers')
+def familymembers():
+    # Add authentication check here
+    return render_template('familymembers.html')
